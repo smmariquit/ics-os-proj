@@ -1,4 +1,4 @@
-/*******************************************************************
+/******************************************************************
 DEX32 API (Application Programmers Interface)
 This is the code that manages system calls from user mode programs (Level 3)
 currently applications make sys calls using interrupt 0x30h (User Interrupt Gate) 
