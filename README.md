@@ -17,7 +17,7 @@ $qemu-system-i386 -fda ics-os-floppy.img
 ## Build Environment
 
 Ubuntu 16.04 64-bit is the last tested working build environment. Virtualbox can be used 
-to run this version of Ubuntu.  However, docker is the recommended build environment since new versions 
+to run this version of Ubuntu. However, docker is the recommended build environment since new versions 
 of Ubuntu do not work anymore.
 
 ### Using Docker to build
@@ -73,7 +73,7 @@ If you find his resource useful in your research or teaching, please cite our [p
 
 ---
 
-J. A. C. Hermocilla. Ics-os: A kernel programming approach to teaching operating system concepts. Philippine Information Technology Journal, 2(2):25--30, 2009.
+J. A. C. Hermocilla. Ics-os: A kernel programming approach to teaching operating system concepts. Philippine Information Technology Journal, 2(2):25, 30, 2009.
 
 ---
 
