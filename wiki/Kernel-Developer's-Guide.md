@@ -4,13 +4,13 @@
 This guide is for software developers who would like to work on the source code of
 ics-os. The suggested development platform is a linux box with the following tools installed.
 
-  * make
-  * gcc(v4.8)/tcc
-  * GNU binutils (ld, strip)
-  * mount
-  * bochs/qemu
-  * nasm
-  * git
+ * make
+ * gcc(v4.8)/tcc
+ * GNU binutils (ld, strip)
+ * mount
+ * bochs/qemu
+ * nasm
+ * git
 
 Instructions for installing the above packages differ from one linux distribution to another. Consult the documentation for the distribution that you use. (NOTE: This guide assumes a **64-bit Ubuntu 16.04** development machine).
 
@@ -30,23 +30,23 @@ $git clone https://github.com/srg-ics-uplb/ics-os.git
 # 3. Building the Source Code
 Building the source code for the kernel and the distribution disk is accomplished using ` make `. Make sure you perform steps 2-4 every time you make changes in the source code.
 
-  1) Next, go inside the directory of the extracted source.
+ 1) Next, go inside the directory of the extracted source.
 ```
 $cd ics-os/ics-os
 ```
-  2) Remove binary files.
+ 2) Remove binary files.
 ```
 $make clean
 ```
-  3) Build the kernel.
+ 3) Build the kernel.
 ```
 $make
 ```
-  4) Create the distribution floppy image. Make sure that you have root privileges(use the `su` or `sudo` command).
+ 4) Create the distribution floppy image. Make sure that you have root privileges(use the `su` or `sudo` command).
 ```
 $sudo make install
 ```
-  5) Test the distribution floppy image. This does not require root privileges.
+ 5) Test the distribution floppy image. This does not require root privileges.
 ```
 $qemu-system-i386 -fda ics-os-floppy.img -boot a
 ```
@@ -56,37 +56,36 @@ Top level directories.
 
 | **Directory** | **Description** |
 |:--------------|:----------------|
-|`apps/`        |Executables of application programs |
-|`apps-old/`    |Executables of old application programs|
-|`base/`        |Contains files that will be on the root directory of the floppy distribution|
-|`boot/`        |Contains files for grub|
-|`contrib/`     |Sources for applications|
-|`kernel/`      |Kernel sources directory|
-|`lib/`         |Binaries of extension modules|
-|`mnt/`         |Temporary folder for mounting the floppy image when creating the distribution|
-|`sdk/`         |Libraries for application development|
+|`apps/` |Executables of application programs |
+|`apps-old/` |Executables of old application programs|
+|`base/` |Contains files that will be on the root directory of the floppy distribution|
+|`boot/` |Contains files for grub|
+|`contrib/` |Sources for applications|
+|`kernel/` |Kernel sources directory|
+|`lib/` |Binaries of extension modules|
+|`mnt/` |Temporary folder for mounting the floppy image when creating the distribution|
+|`sdk/` |Libraries for application development|
 
 Kernel source directories.
 
 | **Directory** | **Description** |
 |:--------------|:----------------|
-|`console/`     |Sources for the main shell|
-|`devmgr/`      |Sources for the device and extension manager|
-|`dexapi/`      |Sources for setting up the system call table|
-|`docs/`        |Documentation files for kernel|
-|`filesystem/`  |Sources for filesystem support (fat12 and iso9660)|
-|`grub/`        |Files needed by grub|
-|`hardware/`    |Sources for hardware device drivers|
-|`iomgr/`       |Input/Output manager code|
-|`memory/`      |Memory management routines|
-|`mnt/`         |Temporary mount directory|
-|`module/`      |Implementation of supported executable file formats (PE, ELF)|
-|`process/`     |Process management routines|
-|`startup/`     |Contains startup routines after bootloader finishes(enables 32-bit protected mode|
-|`stdlib/`      |Standard library routines|
-|`vfs/`         |Virtual File System implementation|
-|`vmm/`         |Virtual Memory Management implementation|
-
+|`console/` |Sources for the main shell|
+|`devmgr/` |Sources for the device and extension manager|
+|`dexapi/` |Sources for setting up the system call table|
+|`docs/` |Documentation files for kernel|
+|`filesystem/` |Sources for filesystem support (fat12 and iso9660)|
+|`grub/` |Files needed by grub|
+|`hardware/` |Sources for hardware device drivers|
+|`iomgr/` |Input/Output manager code|
+|`memory/` |Memory management routines|
+|`mnt/` |Temporary mount directory|
+|`module/` |Implementation of supported executable file formats (PE, ELF)|
+|`process/` |Process management routines|
+|`startup/` |Contains startup routines after bootloader finishes(enables 32-bit protected mode|
+|`stdlib/` |Standard library routines|
+|`vfs/` |Virtual File System implementation|
+|`vmm/` |Virtual Memory Management implementation|
 
 # 5. A Hello World Example
 This section describes an example on how to modify ics-os, specifically the kernel by adding a `hello` command which displays a message. After extracting the sources, open the file `kernel/console/console.c` on a text editor from the top level directory of the extracted source. Locate the function
@@ -186,7 +185,7 @@ clean:
 
 When you run `make`, what happens is that the target `bzImage` is processed first because it is the very first target. The prerequisite for this target is also a target, `all`. Thus, the target `all` will be processed first before the commands for the target `bzImage` are executed. If you look at the target `all`, notice that the prerequisites are also targets and thus will be processed first. The processing is thus recursive. Majority of the commands for the targets invoke the C compiler and assembler defined as variables at the start of the makefile. For example the command for the `scheduler.o` target becomes `gcc -w -nostdlib -fno-builtin -ffreestanding -c -o scheduler.o process/scheduler.c` when executed.
 
-Let us focus our attention on the `Kernel32.bin` target which is the target for creating the final kernel image. Unlike the other targets, the command for this target invokes the linker `ld`. Detailed information on the `ld` command is available <a href='http://sourceware.org/binutils/docs/ld/index.html'>here</a>. Basically, what a linker does is to combine several input files and archives into a single output file. When you compile a program, the final step is usually to invoke the linker. In the case of ics-os, it is composed of several object files (those targets ending in .o). The single kernel image file (Kernel32.bin) is created by invoking the `ld` command. The file `lscript.txt` is the linker script that describes how the output file is to be created. The contents of lscript.txt is shown below.
+Let us focus our attention on the `Kernel32.bin` target which is the target for creating the final kernel image. Unlike the other targets, the command for this target invokes the linker `ld`. Detailed information on the `ld` command is available <a href='http://sourceware.org/binutils/docs/ld/index.html'>here</a>. Basically, what a linker does is to combine several input files and archives into a single output file. When you compile a program, the final step is usually to invoke the linker. In the case of ics-os, it is composed of several object files (those targets ending in.o). The single kernel image file (Kernel32.bin) is created by invoking the `ld` command. The file `lscript.txt` is the linker script that describes how the output file is to be created. The contents of lscript.txt is shown below.
 ```
 OUTPUT_FORMAT("elf32-i386")
 ENTRY(startup)
@@ -227,51 +226,49 @@ The first line of the linker script specifies the type of executable to produce,
 
 The final kernel image `Kernel32.bin` is then gzipped into `vmdex` to conserve space. Control is transferred to this image after GRUB has loaded.
 
-
-
 # 7. startup.asm
 The file [`kernel/startup/startup.asm`](https://github.com/srg-ics-uplb/ics-os/blob/devel/ics-os/kernel/startup/startup.asm) enables the 32-bit protected mode of x86, enables the A20 line, and transfers control to the `main()` function in `kernel32.c`. [Here](http://www.brokenthorn.com/Resources/OSDev8.html) is a link to a more detailed discussion of protected mode.
 
 # 8. kernel32.c
-The file  [`kernel/kernel32.c`](https://github.com/srg-ics-uplb/ics-os/blob/devel/ics-os/kernel/kernel32.c) is the main entry point of the ics-os. The following steps are performed in `main()`
+The file [`kernel/kernel32.c`](https://github.com/srg-ics-uplb/ics-os/blob/devel/ics-os/kernel/kernel32.c) is the main entry point of the ics-os. The following steps are performed in `main()`
 
-  1. Program IRQ lines for timer, keyboard, and floppy 
-  1. Set up the interrupt descriptor table 
-  1. Obtain boot device and memory information from GRUB
-  1. Initialize memory subsystem 
-  1. Sets the current process to the kernel process `_sPCB_`. This structure will be initialized at a later stage
-  1. Setup context switch timer 
-  1. Initialize bridge manager
-  1. Initialize virtual console manager
-  1. Initialize kernel virtual console for kernel messages
+ 1. Program IRQ lines for timer, keyboard, and floppy 
+ 1. Set up the interrupt descriptor table 
+ 1. Obtain boot device and memory information from GRUB
+ 1. Initialize memory subsystem 
+ 1. Sets the current process to the kernel process `_sPCB_`. This structure will be initialized at a later stage
+ 1. Setup context switch timer 
+ 1. Initialize bridge manager
+ 1. Initialize virtual console manager
+ 1. Initialize kernel virtual console for kernel messages
 
 After the above operations, memory access should be saved. Control is transferred to the `dex32_startup()` function.
 
-  1. Print CPU information
-  1. Print available memory
-  1. Initialize extension manager
-  1. Initialize device manager
-  1. Register memory manager and memory allocator
-  1. Initialize `malloc()` provider
-  1. Initialize ports
-  1. Initialize kernel api
-  1. Initialize process manager and start the task switcher
+ 1. Print CPU information
+ 1. Print available memory
+ 1. Initialize extension manager
+ 1. Initialize device manager
+ 1. Register memory manager and memory allocator
+ 1. Initialize `malloc()` provider
+ 1. Initialize ports
+ 1. Initialize kernel api
+ 1. Initialize process manager and start the task switcher
 
 The task switcher calls the `dex_init()` function which is essentially the first "process" that is executed. It performs the following operations
-  1. Initialize the keyboard
-  1. Installs the floppy driver
-  1. Initialize the ide driver
-  1. Initialize the vga driver
-  1. Initialize the I/O manager
-  1. Initialize the virtual file system
-  1. Initialize the task manager
-  1. Initialize the Disk I/O manager
-  1. Initialize null block device
-  1. Initialize device filesystem driver
-  1. Install the FAT12 filesystem driver
-  1. Install the  ISO9660 filesystem driver
-  1. Mount the floppy device
-  1. Initialize module loader
-  1. Run foreground manager thread
-  1. Create a new instance of console
-  1. Start the process dispatcher
+ 1. Initialize the keyboard
+ 1. Installs the floppy driver
+ 1. Initialize the ide driver
+ 1. Initialize the vga driver
+ 1. Initialize the I/O manager
+ 1. Initialize the virtual file system
+ 1. Initialize the task manager
+ 1. Initialize the Disk I/O manager
+ 1. Initialize null block device
+ 1. Initialize device filesystem driver
+ 1. Install the FAT12 filesystem driver
+ 1. Install the ISO9660 filesystem driver
+ 1. Mount the floppy device
+ 1. Initialize module loader
+ 1. Run foreground manager thread
+ 1. Create a new instance of console
+ 1. Start the process dispatcher
